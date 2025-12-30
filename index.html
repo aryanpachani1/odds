@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Intelligence Platform</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 40px 10px;
+}
+
+header h1 {
+    font-size: 2.2rem;
+}
+
+header p {
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+.section {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
+}
+
+.section h2 {
+    margin-bottom: 15px;
+    color: #00e6e6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.button {
+    background: #00e6e6;
+    color: #000;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background: #00cccc;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    display: none;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin: 40px 0 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>Smart Market Intelligence Platform</h1>
+    <p>Understand Market Behaviour. Not Predictions.</p>
+</header>
+
+<div class="section">
+    <h2>What We Do</h2>
+    <p>
+        We provide data-driven market intelligence based on publicly available exchange data such as odds movement,
+        volume behavior, and liquidity response.  
+        This platform is strictly analytical and educational in nature.
+    </p>
+</div>
+
+<div class="section">
+    <h2>Live Market Analysis (Demo)</h2>
+
+    <div class="grid">
+        <div class="card">
+            <p>Odds Movement</p>
+            <strong id="odds">--</strong>
+        </div>
+        <div class="card">
+            <p>Volume Behaviour</p>
+            <strong id="volume">--</strong>
+        </div>
+        <div class="card">
+            <p>Market Psychology</p>
+            <strong id="psychology">--</strong>
+        </div>
+        <div class="card">
+            <p>Fake vs Real Move</p>
+            <strong id="move">--</strong>
+        </div>
+    </div>
+
+    <button class="button" onclick="runAnalysis()">Run Automated Analysis</button>
+
+    <div class="result" id="resultBox"></div>
+</div>
+
+<div class="section">
+    <h2>What We Do NOT Do</h2>
+    <ul>
+        <li>❌ No betting tips</li>
+        <li>❌ No guaranteed outcomes</li>
+        <li>❌ No bookmaker access</li>
+        <li>❌ No betting facilitation</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Legal Disclaimer</h2>
+    <p>
+        This platform is not a betting service. All information is for educational and analytical purposes only.
+        Users are responsible for their own decisions.
+    </p>
+</div>
+
+<footer>
+    This platform is an independent market analysis tool and is not affiliated with any betting exchange or bookmaker.
+</footer>
+
+</div>
+
+<script>
+function runAnalysis() {
+
+    // Dummy logic (future me real API connect ho sakta hai)
+    let oddsMove = Math.random() > 0.5 ? "Stable" : "Volatile";
+    let volume = Math.random() > 0.5 ? "High" : "Low";
+    let psychologyScore = Math.floor(Math.random() * 40) + 60; // 60–100
+    let fakeReal = psychologyScore > 75 ? "Likely Real Move" : "Possible Fake Move";
+
+    document.getElementById("odds").innerText = oddsMove;
+    document.getElementById("volume").innerText = volume;
+    document.getElementById("psychology").innerText = psychologyScore + "%";
+    document.getElementById("move").innerText = fakeReal;
+
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("resultBox").innerHTML =
+        "<b>Analysis Summary:</b><br>" +
+        "Market shows <b>" + volume + "</b> activity with <b>" + oddsMove + "</b> pricing behaviour.<br>" +
+        "Psychology score suggests: <b>" + fakeReal + "</b>.<br><br>" +
+        "<i>This is a probability-based observation, not a prediction.</i>";
+}
+</script>
+
+</body>
+</html>
