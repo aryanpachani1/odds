@@ -14,7 +14,7 @@ body {
 }
 header {
     background: #111822;
-    padding: 15px 30px;
+    padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,34 +23,74 @@ header h1 {
     font-size: 1.4rem;
     color: #00e6e6;
 }
-.user {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
 .dashboard {
     padding: 25px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+    max-width: 1100px;
+    margin: auto;
 }
-.card {
+.market {
     background: #151c27;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    margin-bottom: 20px;
 }
-.card h3 {
+.market h2 {
+    margin-bottom: 15px;
     color: #00e6e6;
+}
+.runners {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+.runner {
+    background: #0f1622;
+    border-radius: 10px;
+    padding: 15px;
+}
+.runner h3 {
     margin-bottom: 10px;
 }
-.value {
-    font-size: 1.6rem;
-    margin-top: 10px;
+.odds-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
-.status {
-    margin-top: 8px;
-    font-size: 0.9rem;
-    opacity: 0.7;
+.back {
+    background: #1e90ff;
+    color: #000;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+.lay {
+    background: #ff5c5c;
+    color: #000;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+.label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+.value {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+.card {
+    background: #151c27;
+    border-radius: 10px;
+    padding: 15px;
+}
+.card h4 {
+    color: #00e6e6;
+    margin-bottom: 8px;
 }
 footer {
     text-align: center;
@@ -65,67 +105,114 @@ footer {
 
 <header>
     <h1>Market Intelligence Dashboard</h1>
-    <div class="user">User: Demo | Plan: Trial</div>
+    <div>User: Demo | Plan: Trial</div>
 </header>
 
 <div class="dashboard">
-    <div class="card">
-        <h3>Live Odds</h3>
-        <div class="value" id="odds">--</div>
-        <div class="status">Auto-refresh every 5 sec</div>
+
+    <div class="market">
+        <h2>Match Odds</h2>
+
+        <div class="runners">
+
+            <!-- TEAM 1 -->
+            <div class="runner">
+                <h3 id="team1">Team A</h3>
+                <div class="odds-grid">
+                    <div class="back">
+                        <div class="label">BACK</div>
+                        <div class="value" id="t1back">--</div>
+                    </div>
+                    <div class="lay">
+                        <div class="label">LAY</div>
+                        <div class="value" id="t1lay">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEAM 2 -->
+            <div class="runner">
+                <h3 id="team2">Team B</h3>
+                <div class="odds-grid">
+                    <div class="back">
+                        <div class="label">BACK</div>
+                        <div class="value" id="t2back">--</div>
+                    </div>
+                    <div class="lay">
+                        <div class="label">LAY</div>
+                        <div class="value" id="t2lay">--</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Matched Volume</h3>
-        <div class="value" id="volume">--</div>
-        <div class="status">Exchange liquidity</div>
+    <div class="info">
+        <div class="card">
+            <h4>Matched Volume</h4>
+            <div id="volume">--</div>
+        </div>
+        <div class="card">
+            <h4>Market Psychology</h4>
+            <div id="psychology">--%</div>
+        </div>
+        <div class="card">
+            <h4>Load Signal</h4>
+            <div id="load">--</div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Market Psychology</h3>
-        <div class="value" id="psychology">--%</div>
-        <div class="status">Behavioural strength</div>
-    </div>
-
-    <div class="card">
-        <h3>Load Signal</h3>
-        <div class="value" id="load">--</div>
-        <div class="status">Probability-based insight</div>
-    </div>
 </div>
 
 <footer>
-This platform is an independent analytical tool. No betting or guarantees.
+Independent analytical tool. No betting, no guarantees.
 </footer>
 
 <script>
-// AUTO REFRESH (API READY)
-async function fetchMarketData() {
+// AUTO REFRESH – API READY
+async function fetchMarket() {
+
     /*
-      REAL VERSION:
-      const res = await fetch("/api/market-data");
-      const data = await res.json();
+    REAL API VERSION:
+    const res = await fetch("/api/market-data");
+    const data = await res.json();
     */
 
-    // DEMO DATA (replace with real API)
-    let odds = (Math.random() * (2.5 - 1.2) + 1.2).toFixed(2);
-    let volume = Math.floor(Math.random() * 500000) + 100000;
+    // DEMO DATA
+    const data = {
+        team1: "Team A",
+        team2: "Team B",
+        t1back: (Math.random() * (2.2 - 1.5) + 1.5).toFixed(2),
+        t1lay: (Math.random() * (2.3 - 1.6) + 1.6).toFixed(2),
+        t2back: (Math.random() * (3.8 - 2.0) + 2.0).toFixed(2),
+        t2lay: (Math.random() * (3.9 - 2.1) + 2.1).toFixed(2),
+        volume: Math.floor(Math.random() * 600000) + 200000
+    };
 
-    // ADVANCED LOAD LOGIC (Simplified)
-    let psychology = Math.min(100, Math.floor((volume / 600000) * 100));
+    // LOAD LOGIC (Simplified but real-style)
+    let spread1 = data.t1lay - data.t1back;
+    let spread2 = data.t2lay - data.t2back;
+    let psychology = Math.min(100, Math.floor((data.volume / 800000) * 100));
+
     let loadSignal =
-        psychology > 75 ? "Heavy Pressure Detected" :
-        psychology > 60 ? "Moderate Accumulation" :
-        "Low Market Commitment";
+        spread1 < spread2 ? "Pressure on " + data.team1 :
+        "Pressure on " + data.team2;
 
-    document.getElementById("odds").innerText = odds;
-    document.getElementById("volume").innerText = volume.toLocaleString();
+    // UPDATE UI
+    document.getElementById("team1").innerText = data.team1;
+    document.getElementById("team2").innerText = data.team2;
+    document.getElementById("t1back").innerText = data.t1back;
+    document.getElementById("t1lay").innerText = data.t1lay;
+    document.getElementById("t2back").innerText = data.t2back;
+    document.getElementById("t2lay").innerText = data.t2lay;
+    document.getElementById("volume").innerText = data.volume.toLocaleString();
     document.getElementById("psychology").innerText = psychology;
     document.getElementById("load").innerText = loadSignal;
 }
 
-fetchMarketData();
-setInterval(fetchMarketData, 5000);
+fetchMarket();
+setInterval(fetchMarket, 5000);
 </script>
 
 </body>
